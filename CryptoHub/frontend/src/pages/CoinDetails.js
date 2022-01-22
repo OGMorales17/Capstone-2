@@ -59,8 +59,6 @@ export default function CoinDetails() {
     const classes = useStyles()
     const params = useParams()
 
-
-    // const id = `COINBASE:${coinDetails.id}`
     const symbols = [
         [
             "coinDetails.name",
@@ -169,8 +167,6 @@ export default function CoinDetails() {
                     </Item> */}
                     <Box sx={{ pb: 2 }}>
                         <SymbolOverview colorTheme="dark" fontColor="rgba(230, 145, 56, 1)" width="100%" height="625" symbols={symbols} />
-                        {/* <AdvancedRealTimeChart theme="dark" width="100%" height="615" symbols={id}></AdvancedRealTimeChart> */}
-
                     </Box>
                 </Grid>
                 <Grid item xs={12} sx={{ mt: 5 }}>

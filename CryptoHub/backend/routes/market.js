@@ -8,7 +8,6 @@ router.get("/test", async (req, res, next) => {
     try {
         const CoinGeckoClient = new CoinGecko();
         const data = await CoinGeckoClient.coins.fetchTickers('bitcoin')
-        // let data = await CoinGeckoClient.coins.fetchTickers('bitcoin')
 
         const { items } = {
             base: data.tickers.base,
@@ -26,7 +25,6 @@ router.get("/test", async (req, res, next) => {
         console.log(err)
     }
 });
-
 
 
 // Get the top 250 coins by market cap
