@@ -7,11 +7,8 @@ const cors = require('cors')
 
 const { NotFoundError } = require("./expressError");
 
-const { authenticateJWT } = require("./middleware/auth");
-const authRoutes = require("./routes/auth");
-// const cryptoassetsRoutes = require("./routes/cryptoassets");
-const usersRoutes = require("./routes/users");
-const learnRoutes = require("./routes/learn");
+const marketRoutes = require("./routes/market");
+const educationRoutes = require("./routes/education");
 // const toolsRoutes = require("./routes/tools");
 const newsRoutes = require("./routes/news");
 
@@ -22,16 +19,13 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use(morgan("tiny"));
-app.use(authenticateJWT);
 app.use(express.urlencoded({ extended: true }))
 
 app.use('/', newsRoutes)
 app.use('/news', newsRoutes)
-app.use("/users", usersRoutes);
-app.use("/auth", authRoutes);
-app.use('/learn', learnRoutes)
+app.use('/education', educationRoutes)
 // app.use('/tools', toolsRoutes)
-// app.use('/cryptoassets', cryptoassetsRoutes)
+app.use('/market', marketRoutes)
 
 
 /** Handle 404 errors -- this matches everything */
