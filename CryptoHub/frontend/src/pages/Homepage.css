@@ -1,6 +1,25 @@
 .Homepage {
   /* put around the vertical center of page */
-  height: calc(100vh - 150px);
-  display: flex;
+  /* height: calc(100vh - 150px); */
+  /* display: flex; */
   align-items: center;
+
+} 
+
+.container{
+  /* text-align: center; */
+  /* background-image: url('../img/web-3850917_1920.jpg'); */
+  /* background-image: url('../img/cryptocurrency.jpg'); */
+  background-image: url('../img/bitcoin.jpg');
+  position: fixed;
+  min-width: 100%;
+  min-height: 100%;
+  top: 0;
+  left: 0;
+  background-position:center center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
+
+/* https://pixabay.com/illustrations/digitization-circuit-board-hand-6883780/ */

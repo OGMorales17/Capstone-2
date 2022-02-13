@@ -24,12 +24,13 @@ import NewspaperIcon from '@mui/icons-material/Newspaper';
 import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from '@mui/material/CssBaseline';
-import { TechnicalAnalysis } from "react-ts-tradingview-widgets";
+
 
 
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
+    background: 'transparent',
     width: drawerWidth,
     transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
@@ -39,9 +40,11 @@ const openedMixin = (theme) => ({
 });
 
 const closedMixin = (theme) => ({
+    background: 'transparent',
     transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
+
     }),
     overflowX: 'hidden',
     width: `calc(${theme.spacing(7)} + 1px)`,
@@ -98,7 +101,10 @@ const menu = [
     { label: 'Home', icon: <HomeIcon /> },
     { label: 'News', icon: <NewspaperIcon /> },
     { label: 'Market', icon: <LocalGroceryStoreIcon /> },
-    { label: 'Education', icon: <SchoolIcon /> },
+    {
+        label: 'Learn', path: `Education/PLmOv2_vzOoGcTirwpJoyhGrYRnv1CRyIa`,
+        icon: <SchoolIcon />
+    },
     { label: 'Tools', icon: <HandymanIcon /> },
 ]
 
@@ -118,6 +124,9 @@ const useStyles = makeStyles(theme => ({
     },
     title: {
         flexGrow: 1
+    },
+    background: {
+        paper: 'transparent'
     },
 }))
 
@@ -168,7 +177,7 @@ export default function MiniDrawer({ NavRoutes }) {
                     >
                         CryptoHub
                     </Typography>
-                    <Switch defaultChecked color="default" checked={theme.palette.mode === 'light'} onChange={handleThemeChange} />
+                    <Switch color="default" checked={theme.palette.mode === 'dark'} onChange={handleThemeChange} />
                     <IconButton color="inherit">
                     </IconButton>
                 </Toolbar>
@@ -183,8 +192,8 @@ export default function MiniDrawer({ NavRoutes }) {
                 {/* <Divider /> */}
                 <List>
                     {menu.map(menuItem => (
-                        <NavLink onClick={handleDrawerClose} style={{ color: 'inherit', textDecoration: 'inherit' }} to={`/${menuItem.label}`} >
-                            <ListItem button key={menuItem.label}>
+                        <NavLink onClick={handleDrawerClose} style={{ color: 'inherit', textDecoration: 'inherit' }} to={`/${menuItem.path || menuItem.label}`} key={menuItem.label} >
+                            <ListItem button >
                                 <ListItemIcon>{menuItem.icon}</ListItemIcon>
                                 <ListItemText primary={menuItem.label} />
                             </ListItem>

@@ -4,27 +4,43 @@ const router = express.Router({ mergeParams: true });
 
 const CoinGecko = require('coingecko-wrapper-api');
 
-router.get("/test", async (req, res, next) => {
+
+router.get("/search", async (req, res, next) => {
     try {
         const CoinGeckoClient = new CoinGecko();
-        const data = await CoinGeckoClient.coins.fetchTickers('bitcoin')
+        // const data = await CoinGeckoClient.coins.fetchTickers('beavis-and-butthead')
+        const data = await CoinGeckoClient.coins.fetchTickers('compound-ether')
+        // const data = await CoinGeckoClient.coins.fetchTickers('crypto-com-chain')
+        // let data = await CoinGeckoClient.coins.markets();
 
-        const { items } = {
-            base: data.tickers.base,
-            target: data.tickers.target,
-            market: data.tickers.market.name,
-        }
-        // const items = data.map((c) => ({
-        //     base: c.tickers.base,
-        //     target: c.tickers.target,
-        //     market: c.tickers.market.name,
-        // }))
-        res.json(items)
-        // res.json(data)
+        res.json(data)
     } catch (err) {
         console.log(err)
     }
 });
+
+router.get("/exchanges", async (req, res, next) => {
+    try {
+        const CoinGeckoClient = new CoinGecko();
+        const data = await CoinGeckoClient.exchanges.all()
+
+
+        res.json(data)
+    } catch (err) {
+        console.log(err)
+    }
+});
+// router.get("/all_tokens", async (req, res, next) => {
+//     try {
+//         const CoinGeckoClient = new CoinGecko();
+//         const data = await CoinGeckoClient.coins.list();
+
+//         res.json(data)
+//     } catch (err) {
+//         console.log(err)
+//     }
+// });
+
 
 
 // Get the top 250 coins by market cap
@@ -37,8 +53,9 @@ router.get("/", async (req, res, next) => {
             id: c.id,
             symbol: c.symbol.toUpperCase(),
             image: c.image,
-            price: c.current_price,
-            price_change_24h: c.price_change_24h,
+            price: c.current_price || 0,
+            percentage_change_24h: c.price_change_percentage_24h || 0,
+            price_change_24h: c.price_change_24h || 0,
             total_volume: c.total_volume, // 24 hr vol
             market_cap: c.market_cap,
         }))
@@ -51,6 +68,7 @@ router.get("/", async (req, res, next) => {
 
 // Get the deatails of the token
 router.get("/details/:token", async (req, res, next) => {
+
     try {
         const CoinGeckoClient = new CoinGecko();
         const { token } = req.params
@@ -76,18 +94,21 @@ router.get("/details/:token", async (req, res, next) => {
 
             homepage: data.data.links.homepage[0],
 
-            categories: data.data.categories,
+            categories: data.data.categories[0],
             price_change_percentage_24h: data.data.market_data.price_change_percentage_24h,
             price_change_percentage_7d: data.data.market_data.price_change_percentage_7d,
             price_change_percentage_14d: data.data.market_data.price_change_percentage_14d,
             price_change_percentage_30d: data.data.market_data.price_change_percentage_30d,
             price_change_24h: data.data.market_data.price_change_24h,
-
             description: data.data.description.en.replace(/(<([^>]+)>)/gi, "").replace(/\r\n/g, ''),
+
+            tickers: data.data.tickers,
         }
 
-        // res.json(data)
+
+
         res.json(item)
+        // res.json(data)
     } catch (err) {
         console.log(err)
     }
@@ -115,6 +136,7 @@ router.get("/categories", async (req, res, next) => {
     }
 
 });
+
 
 module.exports = router;
 

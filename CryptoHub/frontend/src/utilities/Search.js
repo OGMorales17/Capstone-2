@@ -1,52 +1,65 @@
-import React, { useState } from "react";
-// import "./SearchForm.css";
+import React, { useState, useEffect } from "react";
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import { createFilterOptions } from "@material-ui/lab";
+import { useNavigate } from "react-router";
+import CryptoHubApi from "../api";
 
-/** Search widget.
- *
- * Appears on CompanyList and JobList so that these can be filtered
- * down.
- *
- * This component doesn't *do* the searching, but it renders the search
- * form and calls the `searchFor` function prop that runs in a parent to do the
- * searching.
- *
- * { CompanyList, JobList } -> SearchForm
- */
 
-const Search = ({ searchFor }) => {
-    // console.debug("SearchBar", "searchFor=", typeof searchFor);
+const OPTIONS_LIMIT = 5;
+const filterOptions = createFilterOptions({
+    limit: OPTIONS_LIMIT
+});
 
-    const [search, setSearch] = useState("");
 
-    /** Tell parent to filter */
-    const handleSubmit = evt => {
-        // take care of accidentally trying to search for just spaces
-        evt.preventDefault();
-        searchFor(search.trim() || undefined);
-        setSearch(search.trim());
+export default function Search() {
+    const [market, setMarket] = useState(null);
+    const navigate = useNavigate()
+
+    useEffect(function getMarketOnMount() {
+        search();
+    }, []);
+
+    async function search() {
+        let market = await CryptoHubApi.getMarket();
+        setMarket(market);
     }
 
-    /** Update form fields */
-    const handleChange = evt => {
-        setSearch(evt.target.value);
-    }
 
     return (
-        <div className="SearchForm mb-4">
-            <form className="form-inline" onSubmit={handleSubmit}>
-                <input
-                    className="form-control form-control-lg flex-grow-1"
-                    name="searchTerm"
-                    placeholder="Enter search term.."
-                    value={search}
-                    onChange={handleChange}
+        <Autocomplete
+            id="disable-clearable"
+            disableClearable
+            filterOptions={filterOptions}
+            sx={{ width: '100%' }}
+            options={market || []}
+            autoHighlight
+            getOptionLabel={(option) => option.symbol || option.name}
+            onChange={(e, value) => navigate(`/market/details/${value.id}`)}
+            renderOption={(props, option) => (
+                <Box component="li"
+                    label="disableClearable"
+                    sx={{ '& > img': { mr: 2, flexShrink: 1 } }} {...props}>
+                    <img
+                        loading="lazy"
+                        width="flex"
+                        src={option?.image}
+                        alt={option.name}
+                        height="30"
+                    />
+                    {option.name} ({option.symbol})
+                </Box>
+            )}
+            renderInput={(params) => (
+                <TextField
+                    {...params}
+                    style={{ marginBottom: 10, width: "100%" }}
+                    label="Search For a Crypto Currency.."
                 />
-                <button type="submit" className="btn btn-lg btn-primary">
-                    Submit
-                </button>
-            </form>
-        </div>
+            )}
+        />
+
     );
 }
 
-export default Search;

@@ -1,24 +1,5 @@
 .Loading {
-    animation: spin infinite 5s linear;
-
-  }
-  /*You can increase or decrease the timer (5s) to 
-   increase or decrease the speed of the spinner*/
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-
-.Loading {
-  margin: 200px auto 0 auto;
-  color: rgb(10, 12, 14);
-  font-size: 24pt;
-  font-weight: bold;
+  margin: 80px auto 0 auto;
+  font-weight: normal;
   text-align: center;
 }

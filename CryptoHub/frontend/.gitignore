@@ -24,4 +24,5 @@ yarn-error.log*
 
 # others
 
-/scratch
+/scrach
+.env

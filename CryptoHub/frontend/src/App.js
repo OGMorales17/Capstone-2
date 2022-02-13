@@ -12,7 +12,7 @@ import {
   grey,
 } from "@material-ui/core/colors";
 
-export const TOKEN_STORAGE_ID = "cryptohub-token";
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,6 +24,7 @@ const useStyles = makeStyles(theme => ({
 export default function App() {
   const [mode, setMode] = React.useState('dark');
   const classes = useStyles()
+
 
 
   const colorMode = React.useMemo(
@@ -42,7 +43,12 @@ export default function App() {
           mode,
           ...(mode === 'light'
             ? {
+              // background: {
+              //   paper: 'transparent'
+              //   // paper: 'rgba(228, 232, 234, 0.2)'
+              // },
               primary: {
+                // main: 'rgb(41, 182, 246, 0.9)',
                 main: lightBlue[400],
               },
               text: {
@@ -51,7 +57,12 @@ export default function App() {
               },
             }
             : {
+              // background: {
+              //   paper: 'transparent'
+              //   // paper: 'rgba(0, 0, 0, 0.2)'
+              // },
               primary: {
+                // main: 'rgba(255, 160, 0, 0.9)',
                 main: amber[700],
               },
               text: {
@@ -79,40 +90,3 @@ export default function App() {
   );
 }
 
-
-
-
-/**
- * Another approach
- 
-  const mainPrimaryColor = mode === 'dark' ? amber[700] : lightBlue[500];
-  const mainSecondaryColor = mode === 'dark' ? grey[900] : grey[50];
-
-
-  const colorMode = React.useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-      },
-    }),
-    [],
-  );
-
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        type: colorMode,
-        palette: {
-          mode,
-          primary: {
-            main: mainPrimaryColor,
-          },
-          secondary: {
-            main: mainSecondaryColor,
-          }
-
-        },
-      }),
-    [mode],
-  );
- */

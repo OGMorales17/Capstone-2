@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
 
@@ -20,6 +21,7 @@ class CryptoHubApi {
             if (err.response) {
                 let message = err.response.data.error.message;
                 throw Array.isArray(message) ? message : [message];
+
             } else {
                 throw ['Sorry, server is down']
             }
@@ -34,6 +36,11 @@ class CryptoHubApi {
 
     static async getEducation() {
         let res = await this.request("education");
+        return res;
+    }
+
+    static async getEducationById(videoId) {
+        let res = await this.request(`education/${videoId}`);
         return res;
     }
 

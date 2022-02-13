@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Container from "@material-ui/core/Container";
 import Box from '@mui/material/Box';
 import { makeStyles } from '@material-ui/core/styles'
 import Loading from "../utilities/Loading";
@@ -17,10 +16,9 @@ import { Grid, Typography } from '@mui/material'
 import moment from "moment";
 import Link from '@mui/material/Link';
 import { SymbolOverview } from "react-ts-tradingview-widgets";
-
-import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets";
-
-
+import Banner from "../components/Banner";
+import Search from "../utilities/Search";
+import Container from "@material-ui/core/Container";
 
 
 const useStyles = makeStyles(theme => ({
@@ -29,9 +27,19 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(),
     },
     seeMore: {
-        marginTop: theme.spacing(3)
+        marginTop: theme.spacing(3),
     },
-}))
+    appBarSpacer: theme.mixins.toolbar,
+    content: {
+        flexGrow: 1,
+        height: "100vh",
+        overflow: "auto"
+    },
+    container: {
+        paddingTop: theme.spacing(4),
+        paddingBottom: theme.spacing(4)
+    },
+}));
 
 function createData(name, data) {
     return { name, data };
@@ -61,8 +69,7 @@ export default function CoinDetails() {
 
     const symbols = [
         [
-            "coinDetails.name",
-            `BINANCE:${coinDetails.id}USDT|1Y`
+            `${coinDetails.id}USD|1D`
         ],
     ]
 
@@ -91,92 +98,93 @@ export default function CoinDetails() {
         ),
         createData("Price Change 14d",
             `${coinDetails.price_change_percentage_14d} %`
+        ),
+        createData("Price Change 30d",
+            `${coinDetails.price_change_percentage_30d} %`
         )
     ];
 
 
     useEffect(function getDetailsOnMount() {
         search(params.token.toLowerCase());
-    }, []);
+    }, [params]);
 
     async function search(coinName) {
         let coinDetails = await CryptoHubApi.getCoinDetails(coinName);
         setCoinDetails(coinDetails);
     }
+    // const tickers = coinDetails.tickers
+    // tickers.map(tk => tk.trade_url)
+
+    // console.log('tickers map', tickers.map(tk => tk.market.name))
 
     if (!coinDetails) return <Loading />;
 
-    console.log(coinDetails)
-
     return (
         <div className={classes.root}>
-            <Box sx={{ width: '100%', textAlign: 'center' }}>
-                <Container maxWidth="md">
-                    <div className={classes.root}>
-                        <Typography variant="h2" gutterBottom>
-                            CryptoHub
-                        </Typography>
-                        <Typography
-                            variant="subtitle2"
-                            style={{
-                                color: "darkgrey",
-                                textTransform: "capitalize",
-                            }}
-                        >
-                            Get all the Info regarding your favorite Crypto Currency
-                        </Typography>
-                    </div>
-                </Container>
-            </Box>
 
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                <Grid item xs={4}>
-                    <TableContainer component={Paper}>
-                        <div className={classes.root}>
-                            <Typography variant="h8">
-                                {coinDetails.id} Price and Market Stats
-                            </Typography>
-                        </div>
-                        <Table aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>{coinDetails.name}&nbsp;Price</TableCell>
-                                    <TableCell align="right">{`$ ${coinDetails.price}`}</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
+            <Banner text={'Get all the Info regarding your favorite Crypto Currency'} />
 
-                                {rows.map((row) => (
-                                    <TableRow
-                                        key={row.name}
-                                        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                                    >
-                                        <TableCell component="th" scope="row">
-                                            {row.name}
-                                        </TableCell>
-                                        <TableCell align="right">{row.data}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Grid>
-                <Grid item xs={8}>
-                    {/* <Item>
-                        // <SymbolOverview colorTheme="dark" fontColor="rgba(230, 145, 56, 1)" width="100%" height="605" symbols={symbols} />
-                    </Item> */}
-                    <Box sx={{ pb: 2 }}>
-                        <SymbolOverview colorTheme="dark" fontColor="rgba(230, 145, 56, 1)" width="100%" height="625" symbols={symbols} />
-                    </Box>
-                </Grid>
-                <Grid item xs={12} sx={{ mt: 5 }}>
-                    <Item variant="h6">
-                        <Typography variant="h8" gutterBottom>
-                            {coinDetails.description}
-                        </Typography>
-                    </Item>
-                </Grid>
-            </Grid>
+            <Container maxWidth="lg" className={classes.container}>
+
+                <Search />
+                <Box sx={{ width: '100%' }}>
+                    <div className={classes.appBarSpacer} />
+
+                    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                        <Grid item xs={4}>
+                            <TableContainer component={Paper}>
+                                <div className={classes.root}>
+                                    <Typography variant="h8">
+                                        (&nbsp;{coinDetails.id}&nbsp;)&nbsp;&nbsp;Price and Market Stats By CoinGecko
+                                    </Typography>
+                                </div>
+                                <Table aria-label="simple table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>{coinDetails.name}&nbsp;Price</TableCell>
+                                            <TableCell align="right">{`$ ${coinDetails.price}`}</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+
+                                        {rows.map((row) => (
+                                            <TableRow
+                                                key={row.name}
+                                                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                                            >
+                                                <TableCell component="th" scope="row">
+                                                    {row.name}
+                                                </TableCell>
+                                                <TableCell align="right">{row.data}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </Grid>
+                        <Grid item xs={8}>
+                            <Box sx={{ pb: 2 }}>
+                                <SymbolOverview colorTheme="dark" fontColor="rgba(230, 145, 56, 1)" autosize symbols={symbols} />
+                                <Item variant="h6">
+                                    <Typography variant="h8" gutterBottom>
+                                        <Link href='https://www.tradingview.com/' target="_blank" underline="hover">
+                                            Click here for an advance TradingView chart
+                                        </Link>
+                                    </Typography>
+                                </Item>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={12} sx={{ mt: 5 }}>
+                            <Item variant="h6">
+                                <Typography variant="h8" gutterBottom>
+                                    {coinDetails.description}
+                                </Typography>
+                            </Item>
+                        </Grid>
+                    </Grid>
+                </Box>
+            </Container>
         </div>
     )
 

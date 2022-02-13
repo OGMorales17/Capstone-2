@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router";
 import CryptoHubApi from "../api";
-import Loading from "../utilities/Loading";
+import CircularProgressWithLabel from "../utilities/Loading";
 import { makeStyles } from '@material-ui/core/styles'
 import Container from "@material-ui/core/Container";
 import Box from '@mui/material/Box';
-import { TechnicalAnalysis } from "react-ts-tradingview-widgets";
-import { SymbolOverview } from "react-ts-tradingview-widgets";
-
+import Banner from "../components/Banner";
 import {
     Grid,
     Card,
@@ -14,6 +13,9 @@ import {
     CardActionArea,
     Typography,
 } from '@mui/material'
+import LearnSearch from "../utilities/LearnSearch";
+import { SymbolOverview } from "react-ts-tradingview-widgets";
+
 
 const symbols = [
     [
@@ -63,47 +65,34 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default function Education() {
-    const [education, setEducation] = useState(null);
+
+export default function Learn() {
+    const [educationById, setEducationById] = useState([]);
     const classes = useStyles()
+    const params = useParams()
 
-    useEffect(function getEducationOnMount() {
-        console.debug("Education useEffect getNewsOnMount");
-        search();
-    }, []);
+    useEffect(function getEducationByIdOnMount() {
+        search(params.token);
+    }, [params]);
 
-    async function search() {
-        let education = await CryptoHubApi.getEducation();
-        setEducation(education);
+
+    async function search(id) {
+        let educationById = await CryptoHubApi.getEducationById(id);
+        setEducationById(educationById);
     }
 
-    if (!education) return <Loading />;
+
+    if (!educationById) return <CircularProgressWithLabel />;
 
     return (
         <div className={classes.root}>
-            <Box sx={{ width: '100%', textAlign: 'center' }}>
-                <Container maxWidth="md">
-                    <div className={classes.root}>
-                        <Typography variant="h2" gutterBottom>
-                            CryptoHub
-                        </Typography>
-                        <Typography
-                            variant="subtitle2"
-                            style={{
-                                color: "darkgrey",
-                                textTransform: "capitalize",
-                            }}
-                        >
-                            Get all the Info regarding your favorite Crypto Currency
-                        </Typography>
-                    </div>
-                </Container>
-            </Box>
+            <Banner text={'Get all the Info regarding your favorite Crypto Currency'} />
             <Box sx={{ pt: 8 }}>
-                <Box sx={{ pb: 2 }}>
-                    <SymbolOverview colorTheme="dark" width="100%" height="300" symbols={symbols} />
-                </Box>
                 <Container maxWidth="lg" className={classes.container}>
+                    <LearnSearch />
+                    <Box sx={{ pb: 2 }}>
+                        <SymbolOverview colorTheme="dark" width="100%" height="300" symbols={symbols} />
+                    </Box>
                     <Grid
                         container
                         spacing={8}
@@ -111,8 +100,8 @@ export default function Education() {
                         justify="flex-start"
                         alignItems="flex-start"
                     >
-                        {education.map(n => (
-                            <Grid item xs={12} sm={12} md={6} key={education.indexOf(n)}>
+                        {educationById.map(n => (
+                            <Grid item xs={12} sm={12} md={6} key={educationById.indexOf(n)}>
                                 <CardActionArea>
 
                                     <Card style={{ background: 'transparent' }}>
@@ -120,7 +109,7 @@ export default function Education() {
                                             className="video"
                                             style={{
                                                 position: "relative",
-                                                paddingBottom: "56.25%" /* 16:9 */,
+                                                paddingBottom: "56.25%",
                                                 paddingTop: 25,
                                                 height: 0
                                             }}
@@ -156,15 +145,3 @@ export default function Education() {
 
     )
 }
-
-
-/** Creadits To
- * 
- * https://kevinsimper.medium.com/full-width-youtube-embed-with-react-js-responsive-embed-509de7e7c3bf
- * 
- * https://dev.to/bravemaster619/simplest-way-to-embed-a-youtube-video-in-your-react-app-3bk2
- * 
- * To add more content, I could scrap some information out of this site
- * https://changelly.com/blog/most-profitable-coins-to-mine/amp/
- * https://stackoverflow.com/questions/23343191/copying-html-code-in-google-chromes-inspect-element/44705304
- */

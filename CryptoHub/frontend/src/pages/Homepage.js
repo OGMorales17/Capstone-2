@@ -1,47 +1,38 @@
-// import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-// import "./Homepage.css";
-// import UserContext from "../auth/UserContext";
+import Container from "@material-ui/core/Container";
+import Banner from "../components/Banner";
+import { Box } from "@mui/system";
 import { makeStyles } from '@material-ui/core/styles'
+import "./Homepage.css";
 
-/** Homepage of site.
- *
- * Shows welcome message or login/register buttons.
- *
- * Routed at /
- *
- * Routes -> Homepage
- */
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     padding: theme.spacing(8),
-  }
+  },
+  seeMore: {
+    marginTop: theme.spacing(3)
+  },
 }))
 
 function Homepage() {
-  // const { currentUser } = useContext(UserContext);
   const classes = useStyles()
 
+
   return (
-    <div className={classes.root}>
-      <div className="container text-center">
-        <h1 className="mb-4 font-weight-bold">Jobly</h1>
-        <p className="lead">All the jobs in one, convenient place.</p>
-        <p>
-          <Link className="btn btn-primary font-weight-bold m-2"
-            to="/login">
-            Log in
-          </Link>
-          <Link className="btn btn-primary font-weight-bold m-2"
-            to="/signup">
-            Sign up
-          </Link>
-        </p>
+    <div className="container" >
+      <div className={classes.root}>
+        <Box sx={{ pt: 8 }}>
+          <Banner text={'Get all the Info regarding your favorite Crypto Currency'} />
+          <Container maxWidth="lg" className={classes.container}>
+            {/* <Search /> */}
+          </Container>
+        </Box>
       </div>
     </div>
   );
 }
+
+
 
 export default Homepage;

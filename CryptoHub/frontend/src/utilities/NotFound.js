@@ -12,12 +12,8 @@ const NotFound = () => {
         <p className="lead">Try to sign up or log in.</p>
         <p>
           <Link className="btn btn-primary font-weight-bold m-2"
-            to="/login">
+            to="/home">
             Log in
-          </Link>
-          <Link className="btn btn-primary font-weight-bold m-2"
-            to="/signup">
-            Sign up
           </Link>
         </p>
       </div>

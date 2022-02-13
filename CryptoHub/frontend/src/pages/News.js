@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import CryptoHubApi from "../api";
-import Loading from "../utilities/Loading";
+import CircularProgressWithLabel from "../utilities/Loading";
 import { makeStyles } from '@material-ui/core/styles'
 import Container from "@material-ui/core/Container";
 import Box from '@mui/material/Box';
 import { TickerTape } from "react-ts-tradingview-widgets";
-
+import Banner from "../components/Banner";
 import {
   Grid,
   Card,
@@ -53,7 +53,6 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function News() {
-  console.debug("NewsList");
   const [news, setNews] = useState(null);
   const classes = useStyles()
 
@@ -67,33 +66,16 @@ export default function News() {
     setNews(news);
   }
 
-  if (!news) return <Loading />;
+  if (!news) return <CircularProgressWithLabel />;
 
   return (
     <div className={classes.root}>
-      <Box sx={{ width: '100%', textAlign: 'center' }}>
-        <Container maxWidth="md">
-          <div className={classes.root}>
-            <Typography variant="h2" gutterBottom>
-              CryptoHub
-            </Typography>
-            <Typography
-              variant="subtitle2"
-              style={{
-                color: "darkgrey",
-                textTransform: "capitalize",
-              }}
-            >
-              Get all the Info regarding your favorite Crypto Currency
-            </Typography>
-          </div>
-        </Container>
-      </Box>
+      <Banner text={'Get all the Info regarding your favorite Crypto Currency'} />
       <Box sx={{ pt: 8 }}>  {/* By removing this open and closing Box on the botton  */}
-        <Box sx={{ pb: 2 }}>
-          <TickerTape colorTheme="dark" symbols={tickeTapeSymbols} ></TickerTape> {/* Move tis Tiker with the Boxes inside Container to keep it same side wide of the cards */}
-        </Box>
         <Container maxWidth="lg" className={classes.container}> {/* By removing this open and closing Container on the botton the Cards will take full wide */}
+          <Box sx={{ pb: 2 }}>
+            <TickerTape colorTheme="dark" symbols={tickeTapeSymbols} ></TickerTape> {/* Move tis Tiker with the Boxes inside Container to keep it same side wide of the cards */}
+          </Box>
           <Grid
             container
             spacing={4}
