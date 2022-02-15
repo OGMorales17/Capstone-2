@@ -58,7 +58,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     alignItems: 'center',
     justifyContent: 'flex-end',
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
 }));
 
@@ -98,6 +97,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 const menu = [
+    // { label: 'Home', icon:  },
+    // { label: 'News', icon: <HomeIcon /> },
     { label: 'Home', icon: <HomeIcon /> },
     { label: 'News', icon: <NewspaperIcon /> },
     { label: 'Market', icon: <LocalGroceryStoreIcon /> },
@@ -152,7 +153,6 @@ export default function MiniDrawer({ NavRoutes }) {
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            {/* https://github.com/mui-org/material-ui/pull/26545 */}
             <AppBar enableColorOnDark position="fixed" open={open}>
                 <Toolbar>
                     <IconButton

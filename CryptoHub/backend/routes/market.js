@@ -5,44 +5,6 @@ const router = express.Router({ mergeParams: true });
 const CoinGecko = require('coingecko-wrapper-api');
 
 
-router.get("/search", async (req, res, next) => {
-    try {
-        const CoinGeckoClient = new CoinGecko();
-        // const data = await CoinGeckoClient.coins.fetchTickers('beavis-and-butthead')
-        const data = await CoinGeckoClient.coins.fetchTickers('compound-ether')
-        // const data = await CoinGeckoClient.coins.fetchTickers('crypto-com-chain')
-        // let data = await CoinGeckoClient.coins.markets();
-
-        res.json(data)
-    } catch (err) {
-        console.log(err)
-    }
-});
-
-router.get("/exchanges", async (req, res, next) => {
-    try {
-        const CoinGeckoClient = new CoinGecko();
-        const data = await CoinGeckoClient.exchanges.all()
-
-
-        res.json(data)
-    } catch (err) {
-        console.log(err)
-    }
-});
-// router.get("/all_tokens", async (req, res, next) => {
-//     try {
-//         const CoinGeckoClient = new CoinGecko();
-//         const data = await CoinGeckoClient.coins.list();
-
-//         res.json(data)
-//     } catch (err) {
-//         console.log(err)
-//     }
-// });
-
-
-
 // Get the top 250 coins by market cap
 router.get("/", async (req, res, next) => {
     try {
@@ -60,7 +22,6 @@ router.get("/", async (req, res, next) => {
             market_cap: c.market_cap,
         }))
         res.json(items)
-        // res.json(data)
     } catch (err) {
         console.log(err)
     }
@@ -105,10 +66,7 @@ router.get("/details/:token", async (req, res, next) => {
             tickers: data.data.tickers,
         }
 
-
-
         res.json(item)
-        // res.json(data)
     } catch (err) {
         console.log(err)
     }
@@ -134,7 +92,43 @@ router.get("/categories", async (req, res, next) => {
     } catch (err) {
         console.log(err)
     }
+});
 
+// Get all the exchanges
+router.get("/exchanges", async (req, res, next) => {
+    try {
+        const CoinGeckoClient = new CoinGecko();
+        const data = await CoinGeckoClient.exchanges.all()
+
+
+        res.json(data)
+    } catch (err) {
+        console.log(err)
+    }
+});
+
+// Get a list of all the tokens
+router.get("/all_tokens", async (req, res, next) => {
+    try {
+        const CoinGeckoClient = new CoinGecko();
+        const data = await CoinGeckoClient.coins.list();
+
+        res.json(data)
+    } catch (err) {
+        console.log(err)
+    }
+});
+
+// Use just for testing
+router.get("/search", async (req, res, next) => {
+    try {
+        const CoinGeckoClient = new CoinGecko();
+        const data = await CoinGeckoClient.coins.fetchTickers('compound-ether')
+        // let data = await CoinGeckoClient.coins.markets();
+        res.json(data)
+    } catch (err) {
+        console.log(err)
+    }
 });
 
 

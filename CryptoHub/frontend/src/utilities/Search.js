@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 import CryptoHubApi from "../api";
 
 
-const OPTIONS_LIMIT = 5;
+const OPTIONS_LIMIT = 10;
 const filterOptions = createFilterOptions({
     limit: OPTIONS_LIMIT
 });
@@ -35,7 +35,7 @@ export default function Search() {
             sx={{ width: '100%' }}
             options={market || []}
             autoHighlight
-            getOptionLabel={(option) => option.symbol || option.name}
+            getOptionLabel={(option) => option.name}
             onChange={(e, value) => navigate(`/market/details/${value.id}`)}
             renderOption={(props, option) => (
                 <Box component="li"

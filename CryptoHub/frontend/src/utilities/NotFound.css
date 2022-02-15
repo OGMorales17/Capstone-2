@@ -1,6 +1,13 @@
-.NotFound {
-  /* put around the vertical center of page */
-  height: calc(100vh - 150px);
-  display: flex;
-  align-items: center;
+.glitch{
+  text-align: center;
+  background-image: url('../img/glitch-backgroverlay.png');
+  position: fixed;
+  min-width: 100%;
+  min-height: 100%;
+  top: 0;
+  left: 0;
+  background-position:center center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
 }

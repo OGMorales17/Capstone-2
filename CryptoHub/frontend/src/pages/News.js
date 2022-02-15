@@ -74,7 +74,7 @@ export default function News() {
       <Box sx={{ pt: 8 }}>  {/* By removing this open and closing Box on the botton  */}
         <Container maxWidth="lg" className={classes.container}> {/* By removing this open and closing Container on the botton the Cards will take full wide */}
           <Box sx={{ pb: 2 }}>
-            <TickerTape colorTheme="dark" symbols={tickeTapeSymbols} ></TickerTape> {/* Move tis Tiker with the Boxes inside Container to keep it same side wide of the cards */}
+            <TickerTape colorTheme="dark" displayMode="regular" symbols={tickeTapeSymbols} ></TickerTape> {/* Move tis Tiker with the Boxes inside Container to keep it same side wide of the cards */}
           </Box>
           <Grid
             container

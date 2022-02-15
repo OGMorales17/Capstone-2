@@ -1,24 +1,52 @@
-import React from "react";
-import "./NotFound.css";
-import { Link } from "react-router-dom";
+import * as React from 'react';
+import { Box } from "@mui/system";
+import { makeStyles } from '@material-ui/core/styles'
+import './NotFound.css'
+import { Typography } from '@mui/material';
+import BasicButtons from '../utilities/BasicButtons';
 
 
-/** This the the customr 404 section if the route couldnt find anything match*/
-const NotFound = () => {
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+    padding: theme.spacing(8),
+  },
+}))
+
+
+export default function NotFound() {
+  const classes = useStyles()
+
   return (
-    <div className="Homepage">
-      <div className="container text-center">
-        <h1 className="mb-4 font-weight-bold">Hmmm. I can't seem to find what you want.</h1>
-        <p className="lead">Try to sign up or log in.</p>
-        <p>
-          <Link className="btn btn-primary font-weight-bold m-2"
-            to="/home">
-            Log in
-          </Link>
-        </p>
+    <div className="text-center">
+      <div className={classes.root}>
+        <Box sx={{ pt: 2 }}>
+          <Typography variant="h2"
+            style={{ color: "#b71c1c" }}
+            sx={{ fontWeight: 'normal' }}>
+            Error&nbsp;
+            <Typography variant="h1" style={{ display: 'inline-block', color: "#b71c1c" }} sx={{ fontWeight: 'bold' }}>404</Typography>
+          </Typography>
+          <Typography variant="h5"
+            style={{ color: "#b71c1c" }}
+            sx={{ fontWeight: 'light', mt: 3 }}>
+            Page Not Found
+          </Typography>
+        </Box>
+        <Box sx={{ pt: 5 }}>
+          <BasicButtons />
+        </Box>
       </div>
     </div>
   );
-};
+}
 
-export default NotFound;
+/**
+// <Box >
+//   <Card>
+//     <CardMedia
+//       image={require('../img/glitch-backgroverlay.png')} />
+//   </Card>
+// </Box>
+ */

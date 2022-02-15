@@ -19,6 +19,7 @@ import { SymbolOverview } from "react-ts-tradingview-widgets";
 import Banner from "../components/Banner";
 import Search from "../utilities/Search";
 import Container from "@material-ui/core/Container";
+import { useNavigate } from 'react-router-dom';
 
 
 const useStyles = makeStyles(theme => ({
@@ -66,6 +67,8 @@ export default function CoinDetails() {
     const [coinDetails, setCoinDetails] = useState([]);
     const classes = useStyles()
     const params = useParams()
+    const navigate = useNavigate();
+
 
     const symbols = [
         [
@@ -187,7 +190,6 @@ export default function CoinDetails() {
             </Container>
         </div>
     )
-
 
 }
 
