@@ -1,5 +1,5 @@
-# CryptoHub
-Techical analysis indicators, news, markets, education and more ....
+# CryptoHub <font size="3">Techical analysis indicators, news, markets, education and more ....</font>
+
 
 
 
