@@ -1,4 +1,5 @@
-# CryptoHub - techical analysis indicators, news, markets, education and more ....
+# CryptoHub
+Techical analysis indicators, news, markets, education and more ....
 
 
 
